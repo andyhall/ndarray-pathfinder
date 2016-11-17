@@ -1,0 +1,15 @@
+{
+  "name": "ndarray-pathfinder",
+  "version": "0.0.1",
+  "description": "A* pathfinding through an ndarray of cost values",
+  "main": "finder.js",
+  "scripts": {
+    "test": "node test/*"
+  },
+  "author": "Andy Hall",
+  "license": "MIT",
+  "devDependencies": {
+    "ndarray": "^1.0.18",
+    "tape": "^4.6.2"
+  }
+}
