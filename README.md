@@ -1,6 +1,6 @@
 # ndarray-pathfinder
 
-A* pathfinding through an [ndarray](https://github.com/scijs/ndarray) of cost values
+A* pathfinding through an [ndarray](https://github.com/scijs/ndarray) of cost values.
 
 ### Installation:
 
@@ -14,12 +14,12 @@ npm install --save ndarray-pathfinder
 var finder = require('ndarray-pathfinder')
 
 // array through which to pathfinding
-var arr = new ndarray([], [5, 5])
+var arr = new ndarray(new Float32Array(25), [5, 5])
 
-// values in array are assumed to be path costs
-arr.set(1, 1, 1000)
-arr.set(2, 1, 1000)
-arr.set(3, 1, 1000)
+// barriers
+arr.set(1, 1, 100)
+arr.set(2, 1, 100)
+arr.set(3, 1, 100)
 
 // start/end nodes
 var start = [0, 0]
@@ -30,6 +30,12 @@ var path = finder(arr, start, goal)
 console.log(path)
 // [ [0,0], [0,1], ...
 ```
+
+### Notes:
+
+ * Orthogonal (l1) moves only for now
+ * Cost of each move is assumed to be 1 + the ndarray value at the destination
+ * Should work in any dimension (2D or above)
 
 ### By:
 
