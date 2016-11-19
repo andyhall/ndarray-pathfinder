@@ -2,6 +2,8 @@
 
 A* pathfinding through an [ndarray](https://github.com/scijs/ndarray) of cost values.
 
+Implemented by wrapping ndarray accessors around [abstract-pathfinder](https://github.com/andyhall/abstract-pathfinder).
+
 ### Installation:
 
 ```shell
@@ -29,7 +31,14 @@ var goal = [3, 3]
 var path = finder(arr, start, goal)
 console.log(path)
 // [ [0,0], [0,1], ...
+
+// can also pass in a flag to prefer direct paths
+var preferDiagonal = true
+var path = finder(arr, start, goal, preferDiagonal)
 ```
+
+That optional flag adds a small term to the heuristic to make it
+prefer straighter lines to the goal, over L-shaped paths.  
 
 ### Notes:
 
