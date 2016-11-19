@@ -1,6 +1,6 @@
 'use strict'
 
-var Finder = require('../abstract-pathfinder')
+var Finder = require('abstract-pathfinder')
 
 module.exports = findPath
 

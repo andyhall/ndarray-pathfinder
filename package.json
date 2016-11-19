@@ -11,5 +11,8 @@
   "devDependencies": {
     "ndarray": "^1.0.18",
     "tape": "^4.6.2"
+  },
+  "dependencies": {
+    "abstract-pathfinder": "0.0.1"
   }
 }
