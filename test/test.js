@@ -63,7 +63,7 @@ test('sanity', function (t) {
 
 
 test('correctness', function (t) {
-    
+
     var arr = new ndarray(new Int8Array(9), [3, 3])
     //   0 2 0
     //   0 0 2
@@ -81,6 +81,43 @@ test('correctness', function (t) {
     t.ok(arrEquals(path[3], [1, 2]), 'correct path in 2d')
     t.ok(arrEquals(path[4], [2, 2]), 'correct path in 2d')
 
+    t.end()
+})
+
+
+
+test('prefer diagonal option', function (t) {
+    var arr = new ndarray([
+        0, 0, 0, 0, 
+        0, 0, 0, 0, 
+        0, 0, 0, 0, 
+        0, 0, 0, 0, 
+    ], [4, 4])
+    var path = finder(arr, [0, 0], [3, 3], true)
+    t.ok(path.length === 7, 'diagonal option worked')
+    t.ok(arrEquals(path[2], [1, 1]), 'diagonal path correct')
+    t.ok(arrEquals(path[4], [2, 2]), 'diagonal path correct')
+    t.end()
+})
+
+
+test('cost function option', function (t) {
+    var arr = new ndarray([
+        0, 0, 5, 0, 
+        0, 0, 0, 0, 
+        0, 0, 0, 0, 
+        0, 0, 6, 0, 
+    ], [4, 4])
+    var costFn = function (value) {
+        if (value === 0) return 10
+        if (value === 6) return 1
+        if (value === 5) return 1
+        return 100
+    }
+    var path = finder(arr, [0, 0], [3, 3], true, costFn)
+    t.ok(path.length === 7, 'custom cost worked')
+    t.ok(arrEquals(path[2], [0, 2]), 'custom cost correct')
+    t.ok(arrEquals(path[5], [3, 2]), 'custom cost correct')
     t.end()
 })
 

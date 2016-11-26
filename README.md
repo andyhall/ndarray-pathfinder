@@ -27,23 +27,29 @@ arr.set(3, 1, 100)
 var start = [0, 0]
 var goal = [3, 3]
 
-// returns path as array of nodes
+// returns path as array of n-length arrays
 var path = finder(arr, start, goal)
-console.log(path)
-// [ [0,0], [0,1], ...
+// path: [ [0,0], [0,1], ... ]
 
-// can also pass in a flag to prefer direct paths
-var preferDiagonal = true
-var path = finder(arr, start, goal, preferDiagonal)
 ```
 
-That optional flag adds a small term to the heuristic to make it
-prefer straighter lines to the goal, over L-shaped paths.  
+### Optional arguments: 
+
+```js
+var preferDiag = true
+var costFcn = function(value) {
+    if (value < 0) return -1
+    return 1 + value
+}
+var path = finder(arr, start, goal, preferDiagonal, costFcn)
+```
+
+ * `preferDiagonal` - a flag that adds a small term to the heuristic to prefer cells closer the goal
+ * `costFunction` - a function to convert ndarray values to movement costs
 
 ### Notes:
 
  * Orthogonal (l1) moves only for now
- * Cost of each move is assumed to be 1 + the ndarray value at the destination
  * Should work in any dimension (2D or above)
 
 ### By:

@@ -9,19 +9,25 @@ module.exports = findPath
  *  Entry point - check inputs and pass to implementation 
 */
 
-function findPath(arr, start, goal, preferDiagonal) {
+function findPath(arr, start, goal, preferDiagonal, costFcn) {
     var dims = arr.shape.length
     if (dims < 2) throw 'Cannot pathfind in fewer than two dimensions'
     if (start.length !== dims) throw 'Start vector must have same dimensions as ndarray'
     if (goal.length !== dims) throw 'Goal vector must have same dimensions as ndarray'
-    var diagonal = !!preferDiagonal
     // could do more here but meh.
-    return finder_impl(arr, dims, arr.shape, start, goal, diagonal)
+    var diag = !!preferDiagonal
+    var cfn = costFcn || defaultCostFcn
+    return finder_impl(arr, dims, arr.shape, start, goal, diag, cfn)
 }
 
 
+function defaultCostFcn(value) {
+    if (value < 0) return -1
+    return +value + 1
+}
 
-function finder_impl(arr, dims, shape, start, goal, diagonal) {
+
+function finder_impl(arr, dims, shape, start, goal, diagonal, costFcn) {
     // set up abstract solver
     var finder = new Finder()
 
@@ -31,8 +37,7 @@ function finder_impl(arr, dims, shape, start, goal, diagonal) {
 
     finder.getMovementCost = function (a, b) {
         var val = arr.get.apply(arr, b)
-        if (val < 0) return -1
-        return val + 1
+        return costFcn(val)
     }
 
     function heuristic(a, b) {
@@ -56,7 +61,7 @@ function finder_impl(arr, dims, shape, start, goal, diagonal) {
         return manhattan + crow / scale
     }
 
-    finder.getHeuristic = diagonal ? heuristicDiagonal : heuristic 
+    finder.getHeuristic = diagonal ? heuristicDiagonal : heuristic
 
     finder.getNeighbors = function (a) {
         var ret = []
