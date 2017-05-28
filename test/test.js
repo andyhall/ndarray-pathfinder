@@ -54,7 +54,7 @@ test('sanity', function (t) {
     t.ok(path.length === 7, 'sane path in 3d')
     t.ok(arrEquals(path[0], [0, 0, 0]), 'sane path in 3d')
     t.ok(arrEquals(path[6], [2, 2, 2]), 'sane path in 3d')
-    t.ok(!arrEquals(path[3], [1, 1, 1]), 'sane path in 2d')
+    t.ok(!arrEquals(path[3], [1, 1, 1]), 'sane path in 3d')
 
     t.end()
 })
